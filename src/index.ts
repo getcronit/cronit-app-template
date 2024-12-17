@@ -1,15 +1,21 @@
-import {app} from '@getcronit/pylon'
-import {serve} from '@hono/node-server'
+import { app } from "@getcronit/pylon";
+import { serve } from "@hono/node-server";
 
 export const graphql = {
   Query: {
     hello: () => {
-      return 'Hello, world!'
-    }
+      return "Hello, world!";
+    },
   },
-  Mutation: {}
-}
+  Mutation: {},
+};
 
-serve(app, info => {
-  console.log(`Server running at ${info.port}`)
-})
+serve(
+  {
+    fetch: app.fetch,
+    port: process.env.PORT ? parseInt(process.env.PORT) : 4000,
+  },
+  (info) => {
+    console.log(`Server running at ${info.port}`);
+  }
+);
